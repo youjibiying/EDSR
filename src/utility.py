@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 
 import numpy as np
 import imageio
+import shutil
 
 import torch
 import torch.optim as optim
@@ -61,7 +62,8 @@ class checkpoint():
                 args.load = ''
 
         if args.reset:
-            os.system('rm -rf ' + self.dir)
+            shutil.rmtree(self.dir)
+            # os.system('rm -rf ' + self.dir)
             args.load = ''
 
         os.makedirs(self.dir, exist_ok=True)
@@ -77,7 +79,7 @@ class checkpoint():
                 f.write('{}: {}\n'.format(arg, getattr(args, arg)))
             f.write('\n')
 
-        self.n_processes = 8
+        self.n_processes = 1
 
     def get_path(self, *subdir):
         return os.path.join(self.dir, *subdir)

@@ -3,7 +3,7 @@ from importlib import import_module
 from torch.utils.data import dataloader
 from torch.utils.data import ConcatDataset
 
-# This is a simple wrapper function for ConcatDataset
+# This is a simple wrapper function for ConcatDatase
 class MyConcatDataset(ConcatDataset):
     def __init__(self, datasets):
         super(MyConcatDataset, self).__init__(datasets)
@@ -20,8 +20,8 @@ class Data:
             datasets = []
             for d in args.data_train:
                 module_name = d if d.find('DIV2K-Q') < 0 else 'DIV2KJPEG'
-                m = import_module('data.' + module_name.lower())
-                datasets.append(getattr(m, module_name)(args, name=d))
+                m = import_module('data.' + module_name.lower()) # import_module('data.demo')动态导入模块，也就是data下面的demo.py文件
+                datasets.append(getattr(m, module_name)(args, name=d)) #getattr获取对象属性后返回值可直接使用
 
             self.loader_train = dataloader.DataLoader(
                 MyConcatDataset(datasets),
@@ -38,8 +38,8 @@ class Data:
                 testset = getattr(m, 'Benchmark')(args, train=False, name=d)
             else:
                 module_name = d if d.find('DIV2K-Q') < 0 else 'DIV2KJPEG'
-                m = import_module('data.' + module_name.lower())
-                testset = getattr(m, module_name)(args, train=False, name=d)
+                m = import_module('data.' + module_name.lower()) # import_module('data.demo')动态导入模块，也就是data下面的demo.py文件
+                testset = getattr(m, module_name)(args, train=False, name=d) #getattr获取对象属性后返回值可直接使用
 
             self.loader_test.append(
                 dataloader.DataLoader(

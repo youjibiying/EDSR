@@ -21,7 +21,7 @@ from torch._six import queue
 
 def _ms_loop(dataset, index_queue, data_queue, done_event, collate_fn, scale, seed, init_fn, worker_id):
     try:
-        collate._use_shared_memory = True
+        collate._use_shared_memory = False
         signal_handling._set_worker_signal_handlers()
 
         torch.set_num_threads(1)
